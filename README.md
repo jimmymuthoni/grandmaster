@@ -1,1 +1,3 @@
-![grandmaster]("https://github.com/jimmymuthoni/grandmaster/blob/7342d47ce1eaf6ff2625105a1efdf169bda33307/granmaster.png")
+### Grandmaster:
+
+![grandmaster](https://github.com/jimmymuthoni/grandmaster/blob/7342d47ce1eaf6ff2625105a1efdf169bda33307/granmaster.png)
