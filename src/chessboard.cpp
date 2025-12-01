@@ -47,4 +47,24 @@ void ChessBoard::initializeBoard(){
 
 }
 
+//getting path to pieces
+QString ChessBoard::getPieceSvgPath(char piece){
+    switch (piece) {
+    case 'K': return ":/assets/pieces/w_king.svg";
+    case 'Q': return ":/assets/pieces/w_queen.svg";
+    case 'R': return ":/assets/pieces/w_rook.svg";
+    case 'B': return ":/assets/pieces/w_bishop.svg";
+    case 'N': return ":/assets/pieces/w_knight.svg";
+    case 'P': return ":/assets/pieces/w_pawn.svg";
+    case 'k': return ":/assets/pieces/b_king.svg";
+    case 'q': return ":/assets/pieces/b_queen.svg";
+    case 'r': return ":/assets/pieces/b_rook.svg";
+    case 'b': return ":/assets/pieces/b_bishop.svg";
+    case 'n': return ":/assets/pieces/b_knight.svg";
+    case 'p': return ":/assets/pieces/b_.pawn";
+    
+    default: return "";
+    }
+}
+
 
