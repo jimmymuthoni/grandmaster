@@ -35,7 +35,7 @@ class ChessBoard : public QWidget{
         bool isValidQueenMove(int fromRow, int fromCol, int toRow, int toCol);
         bool isValidKingMove(int fromRow, int fromCol, int toRow, int toCol);
         bool isPathClear(int fromRow, int fromCol, int toRow, int toCol);
-        char getPieceAT(int row, int col);
+        char getPieceAt(int row, int col);
 
         std::vector<std::vector<char>> initilPosition = {
             {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'},
