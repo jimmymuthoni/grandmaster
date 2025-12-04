@@ -68,3 +68,31 @@ QString ChessBoard::getPieceSvgPath(char piece){
 }
 
 
+//setting the initillposition of the pieces
+void ChessBoard::setupInitialPosition(){
+    for (int row=0;row<8;row++){
+        for (int col=0;col<8;col++){
+            char piece = initilPosition[row][col];
+            QString svgPath = getPieceSvgPath(piece);
+            if (!svgPath.isEmpty()) {
+                QIcon icon(svgPath);
+                squares[row][col]->setIcon(icon);
+                squares[row][col]->setIconSize(QSize(36,36));
+                squares[row][col]->setProperty("pieceType",QChar(piece));
+
+                if (std::isupper(piece)){
+                    squares[row][col]->setProperty("pieceColor","white");
+                } else {
+                    squares[row][col]->setProperty("pieceColor","black");
+                }
+            } else {
+                    squares[row][col]->setIcon(QIcon());
+                    squares[row][col]->setProperty("pieceColor","none");
+                    squares[row][col]->setProperty("pieceType","Qchar");
+                }
+
+            }
+
+        }
+    }
+
