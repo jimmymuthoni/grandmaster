@@ -151,4 +151,32 @@ bool ChessBoard::isValidPawnMove(int fromRow, int fromCol,int toRow,int toCol){
      return false;
 }
 
+//check if rook move is valid
+bool ChessBoard::isValidRookMove(int fromRow,int fromCol, int toRow, int toCol){
+    return (fromRow == toRow || fromCol == toCol) && isPathClear(fromRow,fromCol,toRow,toCol);
+}
+
+// check if knight move is valid
+bool ChessBoard::isValidKnightMove(int fromRow, int fromCol, int toRow, int toCol){
+    int rowDiff = abs(toRow - fromRow);
+    int colDiff = abs(toCol - fromCol);
+    return (rowDiff == 2 && colDiff == 1) || (rowDiff == 1 && colDiff == 2);
+}
+
+// check if bishop move is valid
+bool ChessBoard::isValidBishopMove(int fromRow, int fromCol, int toRow, int toCol) {
+    return (abs(toRow - fromRow) == abs(toCol - fromCol)) && isPathClear(fromRow, fromCol, toRow, toCol);
+}
+
+// check if queen move is valid
+bool ChessBoard::isValidQueenMove(int fromRow,int fromCol, int toRow, int toCol){
+    return (isValidRookMove(fromRow,fromCol,toRow,toCol) ||
+            isValidBishopMove(fromRow,fromCol,toRow,toCol));
+}
+
+//check if king move is valid
+bool ChessBoard::isValidKingMove(int fromRow, int fromCol, int toRow,int toCol){
+    return abs(toRow - fromRow) <= 1 && abs(toCol - fromCol) <= 1;
+}
+
 
