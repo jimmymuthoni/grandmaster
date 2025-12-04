@@ -188,3 +188,52 @@ bool ChessBoard::isPathClear(int fromRow, int fromCol, int toRow, int toCol){
     }
     return true;
 }
+
+
+void ChessBoard::squareClicked(){
+    QPushButton* square = qobject_cast<QPushButton*>(sender());
+    if (!square) return;
+
+    int clickedRow = square->property("row").toInt();
+    int clickedCol = square->property("col").toInt();
+
+    QString pieceColor = square->property("pieceColor").toString();
+
+    if (!selectedPiece && pieceColor != currentTurn){
+        return;
+    }
+
+    if (!selectedPiece && !square->icon().isNull()){
+        selectedPiece = square;
+        QString highLightColor = (pieceColor == "white") ? "#595959" : "#363636";
+        square->setStyleSheet("background-color: " + highLightColor + "; font-size: 32px; border-radius: 0; padding: 0;");
+
+    }
+    else if (selectedPiece){
+        int selectedRow = selectedPiece->property("row").toInt();
+        int selectedCol = selectedPiece->property("col").toInt();
+
+        if(isValidMove(selectedRow, selectedCol,clickedRow,clickedCol)){
+            square->setIcon(selectedPiece->icon());
+            square->setIconSize(QSize(36,36));
+            square->setProperty("pieceType",selectedPiece->property("pieceType"));
+            square->setProperty("pieceColor",selectedPiece->property("pieceColor"));
+
+            selectedPiece->setIcon(QIcon());
+            selectedPiece->setProperty("pieceType", QChar(' '));
+            selectedPiece->setProperty("pieceColor", "none");
+
+            moveSound->stop();
+            moveSound->play();
+
+            currentTurn = (currentTurn == "black") ? "white" : "black";
+        }
+
+        selectedPiece->setStyleSheet(squareOriginalStyles[selectedPiece]);
+        selectedPiece = nullptr;
+    }
+}
+
+ChessBoard::~ChessBoard(){
+    delete moveSound;
+}
