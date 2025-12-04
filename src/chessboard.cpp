@@ -103,3 +103,25 @@ char ChessBoard::getPieceAt(int row, int col){
     return square->property("pieceType").toChar().toLatin1();
 }
 
+//chacking if a move is valid
+bool ChessBoard::isValidMove(int fromRow, int fromCol, int toRow, int toCol){
+    char piece = getPieceAt(fromRow,fromCol);
+
+    if (toRow < 0 || toRow >= 8 || toCol < 0 || toCol >= 8) return false;
+
+    QString fromColor = squares[fromRow][fromCol]->property("pieceColor").toString();
+    QString toColor = squares[toRow][toCol]->property("pieceColor").toString();
+    if (toColor == fromColor) return false;
+
+    switch (std::toupper(piece)){
+        case 'P': return isValidPawnMove(fromRow,fromCol,toRow,toCol);
+        case 'R': return isValidRookMove(fromRow,fromCol,toRow,toCol);
+        case 'N': return isValidKnightMove(fromRow,fromCol,toRow,toCol);
+        case 'B': return isValidBishopMove(fromRow,fromCol,toRow,toCol);
+        case 'Q': return isValidQueenMove(fromRow,fromCol,toRow,toCol);
+        case 'K': return isValidKingMove(fromRow,fromCol,toRow,toCol);
+        default: return false;
+    }
+}
+
+
