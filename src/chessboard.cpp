@@ -94,5 +94,12 @@ void ChessBoard::setupInitialPosition(){
             }
 
         }
-    }
+}
+
+//getting loc of piece
+char ChessBoard::getPieceAt(int row, int col){
+    QPushButton* square = squares[row][col];
+    if (square->icon().isNull()) return ' ';
+    return square->property("pieceType").toChar().toLatin1();
+}
 
