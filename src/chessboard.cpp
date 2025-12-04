@@ -8,7 +8,6 @@
 QMap<QPushButton*, QString> squareOriginalStyles;
 
 
-//structure of chessboard
 ChessBoard::ChessBoard(QWidget *parent) : QWidget(parent),selectedPiece(nullptr),currentTurn("white"){
     layout = new QGridLayout(this);
     layout->setSpacing(0);
@@ -21,7 +20,7 @@ ChessBoard::ChessBoard(QWidget *parent) : QWidget(parent),selectedPiece(nullptr)
 
 }
 
-//initilizing the chessboard
+
 void ChessBoard::initializeBoard(){
     squares.resize(8, std::vector<QPushButton*>(8));
 
@@ -47,7 +46,7 @@ void ChessBoard::initializeBoard(){
 
 }
 
-//getting path to pieces
+
 QString ChessBoard::getPieceSvgPath(char piece){
     switch (piece) {
     case 'K': return ":/assets/pieces/w_king.svg";
@@ -67,8 +66,6 @@ QString ChessBoard::getPieceSvgPath(char piece){
     }
 }
 
-
-//setting the initillposition of the pieces
 void ChessBoard::setupInitialPosition(){
     for (int row=0;row<8;row++){
         for (int col=0;col<8;col++){
@@ -96,14 +93,15 @@ void ChessBoard::setupInitialPosition(){
         }
 }
 
-//getting loc of piece
+
 char ChessBoard::getPieceAt(int row, int col){
     QPushButton* square = squares[row][col];
     if (square->icon().isNull()) return ' ';
     return square->property("pieceType").toChar().toLatin1();
 }
 
-//chacking if a move is valid
+
+//checking if moves are valid
 bool ChessBoard::isValidMove(int fromRow, int fromCol, int toRow, int toCol){
     char piece = getPieceAt(fromRow,fromCol);
 
@@ -124,7 +122,6 @@ bool ChessBoard::isValidMove(int fromRow, int fromCol, int toRow, int toCol){
     }
 }
 
-//checking if the pawn move is valid
 bool ChessBoard::isValidPawnMove(int fromRow, int fromCol,int toRow,int toCol){
     QString pieceColor = squares[fromRow][fromCol]->property("pieceColor").toString();
     int direction = (pieceColor == "white") ? 1 : -1;
@@ -151,32 +148,43 @@ bool ChessBoard::isValidPawnMove(int fromRow, int fromCol,int toRow,int toCol){
      return false;
 }
 
-//check if rook move is valid
+
 bool ChessBoard::isValidRookMove(int fromRow,int fromCol, int toRow, int toCol){
     return (fromRow == toRow || fromCol == toCol) && isPathClear(fromRow,fromCol,toRow,toCol);
 }
 
-// check if knight move is valid
 bool ChessBoard::isValidKnightMove(int fromRow, int fromCol, int toRow, int toCol){
     int rowDiff = abs(toRow - fromRow);
     int colDiff = abs(toCol - fromCol);
     return (rowDiff == 2 && colDiff == 1) || (rowDiff == 1 && colDiff == 2);
 }
 
-// check if bishop move is valid
 bool ChessBoard::isValidBishopMove(int fromRow, int fromCol, int toRow, int toCol) {
     return (abs(toRow - fromRow) == abs(toCol - fromCol)) && isPathClear(fromRow, fromCol, toRow, toCol);
 }
 
-// check if queen move is valid
 bool ChessBoard::isValidQueenMove(int fromRow,int fromCol, int toRow, int toCol){
     return (isValidRookMove(fromRow,fromCol,toRow,toCol) ||
             isValidBishopMove(fromRow,fromCol,toRow,toCol));
 }
 
-//check if king move is valid
+
 bool ChessBoard::isValidKingMove(int fromRow, int fromCol, int toRow,int toCol){
     return abs(toRow - fromRow) <= 1 && abs(toCol - fromCol) <= 1;
 }
 
+// is checking if the path is clear
+bool ChessBoard::isPathClear(int fromRow, int fromCol, int toRow, int toCol){
+    int rowDir = (toRow > fromCol) ? 1 : (toRow < fromRow) ? -1 : 0;
+    int colDir = (toCol > fromCol) ? 1 : (toCol < fromCol) ? -1 : 0;
 
+    int row = fromRow + rowDir;
+    int col = fromCol + colDir;
+
+    while (row != toRow || col != toCol){
+        if (getPieceAt(row, col) != ' ') return false;
+        row += rowDir;
+        col += colDir;
+    }
+    return true;
+}
