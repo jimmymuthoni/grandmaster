@@ -124,4 +124,31 @@ bool ChessBoard::isValidMove(int fromRow, int fromCol, int toRow, int toCol){
     }
 }
 
+//checking if the pawn move is valid
+bool ChessBoard::isValidPawnMove(int fromRow, int fromCol,int toRow,int toCol){
+    QString pieceColor = squares[fromRow][fromCol]->property("pieceColor").toString();
+    int direction = (pieceColor == "white") ? 1 : -1;
+
+    if(fromCol == toCol){
+       if (toRow == fromRow + direction && getPieceAt(toRow, toCol) == ' '){
+        return true;
+       }
+       if ((pieceColor == "white" && fromRow == 1) || (pieceColor == "black" && fromRow == 6)){
+            if (toRow == fromRow + 2 * direction && 
+                getPieceAt(toRow, toCol) == ' ' &&
+                getPieceAt(fromRow + direction, toCol) == ' '){
+                return true;
+            }
+       }
+    }
+
+    if (toRow == fromRow + direction && abs(toCol - fromCol) == 1){
+        if (squares[toRow][toCol]->property("pieceColor").toString() != "none" &&
+            squares[toRow][toCol]->property("pieceColor").toString() != pieceColor){
+                return true;
+            }
+     }
+     return false;
+}
+
 
