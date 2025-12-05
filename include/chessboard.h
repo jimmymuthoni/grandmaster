@@ -1,6 +1,7 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
+#include <QWidget>
 #include <QtWidgets>
 #include <QGridLayout>
 #include <QPushButton>
