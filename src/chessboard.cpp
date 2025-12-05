@@ -103,7 +103,7 @@ void ChessBoard::setupInitialPosition(){
             else{
                 squares[row][col]->setIcon(QIcon());
                 squares[row][col]->setProperty("pieceColor", "none");
-                squares[row][col]->setProperty("pieceType", QChar(' ')); // FIXED
+                squares[row][col]->setProperty("pieceType", QChar(' '));
             }
         }
     }
