@@ -38,7 +38,7 @@ class ChessBoard : public QWidget{
         bool isPathClear(int fromRow, int fromCol, int toRow, int toCol);
         char getPieceAt(int row, int col);
 
-        std::vector<std::vector<char>> initilPosition = {
+        std::vector<std::vector<char>> initialPosition = {
             {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'},
             {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
